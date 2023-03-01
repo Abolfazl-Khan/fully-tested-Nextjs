@@ -28,14 +28,19 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "warn",
-    "import/no-extraneous-dependencies": [2, { "devDependencies": true }],
+    "import/no-extraneous-dependencies": [2, {
+      "devDependencies": true
+    }],
     "react/prop-types": ["off"],
-    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
+    "react/jsx-filename-extension": [1, {
+      "extensions": [".tsx", ".jsx"]
+    }],
     "import/extensions": ["error", "never"],
     "import/prefer-default-export": 0,
     "import/no-anonymous-default-export": 0,
@@ -67,7 +72,12 @@
     "simple-import-sort/imports": [
       "warn",
       {
-        "groups": [["^\\u0000"], ["^@?\\w"], ["^"], ["^\\."]]
+        "groups": [
+          ["^\\u0000"],
+          ["^@?\\w"],
+          ["^"],
+          ["^\\."]
+        ]
       }
     ]
   },
@@ -81,7 +91,9 @@
     {
       "files": ["cypress/**/?(*.)+(spec|test).[jt]s?(x)", "cypress/support/*"],
       "extends": ["plugin:cypress/recommended"],
-      "env": { "cypress/globals": true }
+      "env": {
+        "cypress/globals": true
+      }
     }
   ]
 }
