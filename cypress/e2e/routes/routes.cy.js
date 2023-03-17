@@ -14,3 +14,8 @@ it('should navigate to bands route and displays the header correctly', () => {
     'exist'
   );
 });
+
+it('should navigate to the band page that existed at build time and dispays the band name correctly', () => {
+  cy.task('db:reset').visit('/bands/1');
+  cy.findByRole('heading', { name: /Shamrock Pete/i }).should('exist');
+});
