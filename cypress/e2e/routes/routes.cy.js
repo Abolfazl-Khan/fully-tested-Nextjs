@@ -19,3 +19,8 @@ it('should navigate to the band page that existed at build time and dispays the 
   cy.task('db:reset').visit('/bands/1');
   cy.findByRole('heading', { name: /Shamrock Pete/i }).should('exist');
 });
+
+it('should display error when band id does not exist', () => {
+  cy.task('db:reset').visit('/bands/1234');
+  cy.findByText(/error: band not found/i).should('exist');
+});
