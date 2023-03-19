@@ -1,5 +1,5 @@
-// import { generateNewBand } from "../../../__tests__/__mocks__/fakeData/newBand";
-// import { generateRandomId } from "../../../lib/features/reservations/utils";
+import { generateNewBand } from '../../../__tests__/__mocks__/fakeData/newBand';
+import { generateRandomId } from '../../../lib/features/reservations/utils';
 
 it('should navigate to shows route and displays the heading correctly ', () => {
   cy.visit('/');
@@ -23,4 +23,11 @@ it('should navigate to the band page that existed at build time and dispays the 
 it('should display error when band id does not exist', () => {
   cy.task('db:reset').visit('/bands/1234');
   cy.findByText(/error: band not found/i).should('exist');
+});
+
+it('should navigate to the band page that did not existed at build time and dispays the band name correctly', () => {
+  const newBandId = generateRandomId();
+  const newBand = generateNewBand(newBandId);
+  cy.task('db:reset').task('addBand', newBand).visit(`/bands/${newBandId}`);
+  cy.findByRole('heading', { name: newBand.name }).should('exist');
 });
