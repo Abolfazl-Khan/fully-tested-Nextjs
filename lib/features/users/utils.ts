@@ -4,6 +4,7 @@ import pbkdf2 from "pbkdf2";
 import { env } from "process";
 
 import type { AuthUser, PasswordHash, User } from "./types";
+import { getUsers } from "./queries";
 
 export function hashPassword(password: string): PasswordHash {
   const salt = crypto.randomBytes(128).toString("base64");
@@ -54,3 +55,20 @@ export function createJWT(user: User): string {
   }
   return jsonwebtoken.sign(user, env.NEXTAUTH_SECRET, { expiresIn: "24h" });
 }
+
+export const getSignedInUser = async (email: string, password: string) => {
+  const users = await getUsers();
+  const validUser = users.reduce(
+    (foundUser: AuthUser | null, user) =>
+      user.email === email && passwordIsValid(password, user)
+        ? user
+        : foundUser,
+    null
+  );
+
+  if (!validUser) return false;
+
+  const user = removePasswordandAddToken(validUser);
+
+  return { user };
+};
