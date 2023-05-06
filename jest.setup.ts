@@ -4,10 +4,18 @@
 // Used for __tests__/testing-library.js
 // Learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
-
+import { TextDecoder, TextEncoder } from 'util';
+import { resetDB } from './__tests__/__mocks__/db/utils/reset-db';
 import { server } from './__tests__/__mocks__/msw/server';
 
+(global as any).TextEncoder = TextEncoder;
+(global as any).TextDecoder = TextDecoder;
+
 beforeAll(() => server.listen());
+
+beforeEach(async () => {
+  await resetDB();
+});
 
 afterEach(() => server.resetHandlers());
 
